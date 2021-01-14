@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
+  flex-wrap: wrap;
+}
+
+.cell {
+  border: 1px solid blue;
+  font-size: 10px;
+}
+
+.scores {
+  display: flex;
+  width: 400px;
+}
