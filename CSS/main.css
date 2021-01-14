@@ -26,3 +26,20 @@ body {
   display: flex;
   width: 400px;
 }
+
+
+.flag {
+  background-color: red;
+}
+
+.bomb {
+  background-color: black;
+}
+
+.number {
+  background-color: grey;
+}
+
+.empty {
+  background-color: lightblue;
+}
