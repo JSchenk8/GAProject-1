@@ -17,6 +17,8 @@ for (let i = 0; i < width * height; i++) {
   // ? Generate each element
   const cell = document.createElement('div')
   cell.classList.add('cell')
+  cell.setAttribute('display', 'off')
+  cell.setAttribute('checked', 'false')
   cell.id = `${i}`
   grid.appendChild(cell)
   cells.push(cell)
@@ -33,22 +35,68 @@ console.log(flagCounterDisplay)
 flagCounterDisplay.innerHTML = numFlags
 
 
+
 // ! Game Creation
 let clickCounter = 0
+if (clickCounter === 0) {
+  cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+      if (clickCounter !== 0) {
+        //! Dig function goes here! 
+        console.log('you clicked')
+        if (cell.classList.contains('bomb')) {
+          gameOver()
+        } else if (cell.classList.contains('number')) {
+          revealNumber(cell)
+          console.log(cell)
+        } else {
+          revealEmpty(cell)
+          console.log(cell)
+        }
+      } else {
+        assignBombs(Number(cell.id))
+        assignNumbersOrEmpties()
+        clickCounter++
+        console.log(clickCounter)
+      }
+      
+    })
+    
+  })
+} 
+
+
+
+
+
+
+// ! Flag Click
 
 cells.forEach(cell => {
-  cell.addEventListener('click', () => {
-    if (clickCounter !== 0) {
-      return
+  cell.addEventListener('contextmenu', (event) => {
+    event.preventDefault()
+    console.log('right click')
+
+    console.log(cell)
+
+    if (cell.classList.contains('flag')) {
+      cell.classList.remove('flag')
+      numFlags++
+    } else if (numFlags === 0) {
+      alert('You are out of flags!')
+    } else if (cell.getAttribute('display') === 'off') {
+      cell.classList.add('flag')
+      cell.setAttribute('display', 'on')
+      numFlags--
     } else {
-      assignBombs(Number(cell.id))
-      assignNumbersOrEmpties()
-      clickCounter++
+      return
     }
+    flagCounterDisplay.innerHTML = numFlags
   })
 })
 
 
+// ! Dig
 
 
 
@@ -67,6 +115,7 @@ function assignBombs(firstClickNumber) {
   }
   for (let i = 0; i < bombArray.length; i++) {
     document.getElementById(`${bombArray[i]}`).classList.add('bomb')
+    document.getElementById(`${bombArray[i]}`).value = 'bombId'
   }
 }
 
@@ -100,7 +149,7 @@ function assignNumbersOrEmpties() {
   for (let index = 0; index < cells.length; index++)
     if (!document.getElementById(`${index}`).classList.contains('bomb')) {
       const cellsToCheckArray = cellsToCheck(index)
-
+      //console.log(`cellstoCheckArray: ${cellsToCheckArray}`)
       let bombCount = 0
       for (let i = 0; i < cellsToCheckArray.length; i++) {
         if (document.getElementById(`${cellsToCheckArray[i]}`).classList.contains('bomb')) {
@@ -116,26 +165,40 @@ function assignNumbersOrEmpties() {
     }
 }
 
-// ! Flag Click
 
-cells.forEach(cell => {
-  cell.addEventListener('contextmenu', (event) => {
-    event.preventDefault()
-    console.log('right click')
-    
-    console.log(cell)
-    
-    if (cell.classList.contains('flag')) {
-      cell.classList.remove('flag')
-      numFlags++
-    } else if (numFlags === 0){
-      alert('You are out of flags!')
-    } else {
-      cell.classList.add('flag')
-      numFlags--
+//! Game Over function
+
+function gameOver() {
+  alert('Game Over')
+}
+
+
+//! Reveal Number function
+
+function revealNumber(cell) {
+  cell.setAttribute('display', 'on')
+  cell.classList.add('numberOn')
+  cell.setAttribute('checked', 'true')
+}
+
+
+// ! Reveal Empty 
+
+function revealEmpty(cell) {
+  cell.setAttribute('display', 'on')
+  cell.setAttribute('checked', 'true')
+  cell.classList.add('emptyOn')
+  const neighbourArray = cellsToCheck(Number(cell.id))
+  for (let i = 1; i < neighbourArray.length; i++) {
+    const newCell = document.getElementById(`${neighbourArray[i]}`)
+    console.log('Checking cell now')
+    console.log(`The index is ${i}`)
+    if (newCell.getAttribute('checked') === 'true') {
+      console.log('This cell has already been checked')
+    } else if (newCell.classList.contains('number')) {
+      revealNumber(newCell)
+    } else if (newCell.classList.contains('empty')) {
+      revealEmpty(newCell)
     }
-    flagCounterDisplay.innerHTML = numFlags
-  })
-})
-
-
+  }
+}

@@ -29,18 +29,27 @@ body {
 
 
 .flag {
-  background-color: red;
+  background-color: red!important; 
   z-index: 2;
 }
 
-.bomb {
-  background-color: black;
-}
+ 
+/* .bomb { */
+  /* background-color: black; */
+/* } */
 
-.number {
+/* .number { */
+  /* background-color: grey; */
+/* } */
+
+/* .empty { */
+  /* background-color: lightblue; */
+/* } */
+
+.numberOn {
   background-color: grey;
 }
 
-.empty {
+.emptyOn {
   background-color: lightblue;
 }
