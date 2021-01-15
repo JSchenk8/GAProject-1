@@ -5,6 +5,7 @@ const grid = document.querySelector('.grid')
 const width = 18
 const height = 14
 const numBombs = 40
+let numFlags = numBombs
 // * Set Grid Height and Width in px
 grid.style.width = `${width * 50}px`
 grid.style.height = `${height * 50}px`
@@ -26,8 +27,10 @@ for (let i = 0; i < width * height; i++) {
   cell.style.height = `${100 / height}%`
 
 }
-
-
+// * Flag Counter
+const flagCounterDisplay = document.getElementById('flagsLeft')
+console.log(flagCounterDisplay)
+flagCounterDisplay.innerHTML = numFlags
 
 
 // ! Game Creation
@@ -45,7 +48,11 @@ cells.forEach(cell => {
   })
 })
 
-// ? This will run on the condition of a first click, this variable can be added later, along with the event listener for click
+
+
+
+
+// ? THE FUNCTIONS ARE BELOW
 
 
 // ! Bomb Creation Function
@@ -62,8 +69,7 @@ function assignBombs(firstClickNumber) {
     document.getElementById(`${bombArray[i]}`).classList.add('bomb')
   }
 }
-// * This runs a random grid, will never have a bomb on 8
-//assignBombs(56)
+
 
 // ! Function to check which cells to check, REQUIRED INPUT 'cellClicked'
 function cellsToCheck(cellClicked) {
@@ -109,3 +115,27 @@ function assignNumbersOrEmpties() {
       }
     }
 }
+
+// ! Flag Click
+
+cells.forEach(cell => {
+  cell.addEventListener('contextmenu', (event) => {
+    event.preventDefault()
+    console.log('right click')
+    
+    console.log(cell)
+    
+    if (cell.classList.contains('flag')) {
+      cell.classList.remove('flag')
+      numFlags++
+    } else if (numFlags === 0){
+      alert('You are out of flags!')
+    } else {
+      cell.classList.add('flag')
+      numFlags--
+    }
+    flagCounterDisplay.innerHTML = numFlags
+  })
+})
+
+

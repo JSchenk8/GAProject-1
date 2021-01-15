@@ -30,6 +30,7 @@ body {
 
 .flag {
   background-color: red;
+  z-index: 2;
 }
 
 .bomb {
