@@ -1,3 +1,9 @@
+
+
+
+A round of gameplay: 
+
+
 //! Grid Creation
 // * Get grid
 const grid = document.querySelector('.grid')
@@ -13,26 +19,18 @@ grid.style.height = `${height * 50}px`
 const cells = []
 console.log(cells)
 // * Create the grid
-for (let i = 0; i < width * height; i++) {
-  // ? Generate each element
-  const cell = document.createElement('div')
-  cell.classList.add('cell')
-  cell.setAttribute('display', 'off')
-  cell.setAttribute('checked', 'false')
-  cell.id = `${i}`
-  grid.appendChild(cell)
-  cells.push(cell)
-  // ? Display cell index
-  cell.innerHTML = i
-  // ? Set the width and height of cells
-  cell.style.width = `${100 / width}%`
-  cell.style.height = `${100 / height}%`
+createGrid()
 
-}
 // * Flag Counter
 const flagCounterDisplay = document.getElementById('flagsLeft')
 console.log(flagCounterDisplay)
 flagCounterDisplay.innerHTML = numFlags
+
+// * Number of revealed Squares
+let revealedSquares = 0
+
+// * Reset Button
+const resetButton = document.getElementById('playAgain')
 
 
 
@@ -41,24 +39,32 @@ let clickCounter = 0
 if (clickCounter === 0) {
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
-      if (clickCounter !== 0) {
-        //! Dig function goes here! 
-        console.log('you clicked')
-        if (cell.classList.contains('bomb')) {
-          gameOver()
-        } else if (cell.classList.contains('number')) {
-          revealNumber(cell)
-          console.log(cell)
+      if (revealedSquares < 211) {
+        if (clickCounter !== 0) {
+          //! Dig function goes here! 
+          console.log('you clicked')
+          if (cell.classList.contains('bomb')) {
+            gameOver()
+          } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
+            revealNumber(cell)
+            console.log(cell)
+            console.log(`No. Revealed Squares: ${revealedSquares}`)
+          } else if (!(cell.classList.contains('flag'))){
+            revealEmpty(cell)
+            console.log(cell)
+            console.log(`No. Revealed Squares: ${revealedSquares}`)
+          }
         } else {
+          assignBombs(Number(cell.id))
+          assignNumbersOrEmpties()
+          clickCounter++
+          console.log(clickCounter)
           revealEmpty(cell)
-          console.log(cell)
         }
       } else {
-        assignBombs(Number(cell.id))
-        assignNumbersOrEmpties()
-        clickCounter++
-        console.log(clickCounter)
+        alert('You won!')
       }
+      
       
     })
     
@@ -81,6 +87,7 @@ cells.forEach(cell => {
 
     if (cell.classList.contains('flag')) {
       cell.classList.remove('flag')
+      cell.setAttribute('display', 'off')
       numFlags++
     } else if (numFlags === 0) {
       alert('You are out of flags!')
@@ -96,11 +103,46 @@ cells.forEach(cell => {
 })
 
 
-// ! Dig
+// ! Reset Button
+
+resetButton.addEventListener('click', () => {
+  removeGrid(cells)
+  createGrid()
+  clickCounter = 0
+  numFlags = numBombs
+  revealedSquares = 0
+  
+})
 
 
 
 // ? THE FUNCTIONS ARE BELOW
+
+//! Grid Creation button:
+function createGrid() {
+  for (let i = 0; i < width * height; i++) {
+    // ? Generate each element
+    const cell = document.createElement('div')
+    cell.classList.add('cell')
+    cell.setAttribute('display', 'off')
+    cell.setAttribute('checked', 'false')
+    cell.id = `${i}`
+    grid.appendChild(cell)
+    cells.push(cell)
+    // ? Display cell index
+    cell.innerHTML = i
+    // ? Set the width and height of cells
+    cell.style.width = `${100 / width}%`
+    cell.style.height = `${100 / height}%` 
+  }
+}
+
+function removeGrid(cells) {
+  for (let i = 0; i < width * height; i++) {
+    // ? Generate each element
+    cells[i].remove()
+  }
+}
 
 
 // ! Bomb Creation Function
@@ -126,7 +168,7 @@ function cellsToCheck(cellClicked) {
     return [cellClicked, cellClicked + 1, cellClicked + width, cellClicked + width + 1]
   } else if (cellClicked === (width - 1)) {
     return [cellClicked, cellClicked - 1, cellClicked + width, cellClicked + width - 1]
-  } else if (cellClicked === (cells.length - (width - 1))) {
+  } else if (cellClicked === (cells.length - (width))) {
     return [cellClicked, cellClicked + 1, cellClicked - width, cellClicked - width + 1]
   } else if (cellClicked === cells.length - 1) {
     return [cellClicked, cellClicked - 1, cellClicked - width, cellClicked - width - 1]
@@ -179,6 +221,7 @@ function revealNumber(cell) {
   cell.setAttribute('display', 'on')
   cell.classList.add('numberOn')
   cell.setAttribute('checked', 'true')
+  revealedSquares++
 }
 
 
@@ -188,6 +231,7 @@ function revealEmpty(cell) {
   cell.setAttribute('display', 'on')
   cell.setAttribute('checked', 'true')
   cell.classList.add('emptyOn')
+  revealedSquares++
   const neighbourArray = cellsToCheck(Number(cell.id))
   for (let i = 1; i < neighbourArray.length; i++) {
     const newCell = document.getElementById(`${neighbourArray[i]}`)

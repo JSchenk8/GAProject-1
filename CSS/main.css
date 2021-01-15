@@ -33,23 +33,14 @@ body {
   z-index: 2;
 }
 
- 
-/* .bomb { */
-  /* background-color: black; */
-/* } */
-
-/* .number { */
-  /* background-color: grey; */
-/* } */
-
-/* .empty { */
-  /* background-color: lightblue; */
-/* } */
-
 .numberOn {
   background-color: grey;
 }
 
 .emptyOn {
   background-color: lightblue;
+}
+
+#playAgain {
+  margin: 20px;
 }
