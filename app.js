@@ -10,7 +10,7 @@ grid.style.width = `${width * 50}px`
 grid.style.height = `${height * 50}px`
 // * Array of the cells
 const cells = []
-
+console.log(cells)
 // * Create the grid
 for (let i = 0; i < width * height; i++) {
   // ? Generate each element
@@ -24,34 +24,46 @@ for (let i = 0; i < width * height; i++) {
   // ? Set the width and height of cells
   cell.style.width = `${100 / width}%`
   cell.style.height = `${100 / height}%`
+
 }
 
+
+
+
 // ! Game Creation
+let clickCounter = 0
+
+cells.forEach(cell => {
+  cell.addEventListener('click', () => {
+    if (clickCounter !== 0) {
+      return
+    } else {
+      assignBombs(Number(cell.id))
+      assignNumbersOrEmpties()
+      clickCounter++
+    }
+  })
+})
 
 // ? This will run on the condition of a first click, this variable can be added later, along with the event listener for click
+
 
 // ! Bomb Creation Function
 function assignBombs(firstClickNumber) {
   const bombArray = []
   const noBombCells = cellsToCheck(firstClickNumber)
-  console.log(noBombCells)
-  // ! This array above contains all the cells which random numbers CANNOT be
   while (bombArray.length < numBombs) {
     const randomNumber = Math.floor(Math.random() * 251) + 1
-    if ((bombArray.indexOf(randomNumber) === -1) && (bombArray.indexOf(firstClickNumber) === -1)) { // ! Here we need to check it not against 'firstclickNumber', but against each value of 'noBombCells'
+    if ((bombArray.indexOf(randomNumber) === -1) && (noBombCells.indexOf(randomNumber) === -1)) {
       bombArray.push(randomNumber)
     }
   }
-  console.log(bombArray)
   for (let i = 0; i < bombArray.length; i++) {
     document.getElementById(`${bombArray[i]}`).classList.add('bomb')
   }
 }
 // * This runs a random grid, will never have a bomb on 8
-assignBombs(8)
-
-// ! Run the assign numbers for every cell that does not contain a bomb
-
+//assignBombs(56)
 
 // ! Function to check which cells to check, REQUIRED INPUT 'cellClicked'
 function cellsToCheck(cellClicked) {
@@ -82,7 +94,7 @@ function assignNumbersOrEmpties() {
   for (let index = 0; index < cells.length; index++)
     if (!document.getElementById(`${index}`).classList.contains('bomb')) {
       const cellsToCheckArray = cellsToCheck(index)
-      
+
       let bombCount = 0
       for (let i = 0; i < cellsToCheckArray.length; i++) {
         if (document.getElementById(`${cellsToCheckArray[i]}`).classList.contains('bomb')) {
@@ -95,7 +107,5 @@ function assignNumbersOrEmpties() {
         document.getElementById(`${index}`).classList.add('number')
         document.getElementById(`${index}`).innerHTML = bombCount
       }
-    } 
+    }
 }
-
-assignNumbersOrEmpties()
