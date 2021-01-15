@@ -1,7 +1,8 @@
 
 
 
-A round of gameplay: 
+// !A round of gameplay: 
+let newGame = true
 
 
 //! Grid Creation
@@ -36,84 +37,30 @@ const resetButton = document.getElementById('playAgain')
 
 // ! Game Creation
 let clickCounter = 0
-if (clickCounter === 0) {
-  cells.forEach(cell => {
-    cell.addEventListener('click', () => {
-      if (revealedSquares < 211) {
-        if (clickCounter !== 0) {
-          //! Dig function goes here! 
-          console.log('you clicked')
-          if (cell.classList.contains('bomb')) {
-            gameOver()
-          } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
-            revealNumber(cell)
-            console.log(cell)
-            console.log(`No. Revealed Squares: ${revealedSquares}`)
-          } else if (!(cell.classList.contains('flag'))){
-            revealEmpty(cell)
-            console.log(cell)
-            console.log(`No. Revealed Squares: ${revealedSquares}`)
-          }
-        } else {
-          assignBombs(Number(cell.id))
-          assignNumbersOrEmpties()
-          clickCounter++
-          console.log(clickCounter)
-          revealEmpty(cell)
-        }
-      } else {
-        alert('You won!')
-      }
-      
-      
-    })
-    
-  })
-} 
-
-
-
+playGame()
 
 
 
 // ! Flag Click
 
-cells.forEach(cell => {
-  cell.addEventListener('contextmenu', (event) => {
-    event.preventDefault()
-    console.log('right click')
+flagCheck()
 
-    console.log(cell)
 
-    if (cell.classList.contains('flag')) {
-      cell.classList.remove('flag')
-      cell.setAttribute('display', 'off')
-      numFlags++
-    } else if (numFlags === 0) {
-      alert('You are out of flags!')
-    } else if (cell.getAttribute('display') === 'off') {
-      cell.classList.add('flag')
-      cell.setAttribute('display', 'on')
-      numFlags--
-    } else {
-      return
-    }
-    flagCounterDisplay.innerHTML = numFlags
-  })
-})
 
 
 // ! Reset Button
 
 resetButton.addEventListener('click', () => {
   removeGrid(cells)
-  createGrid()
   clickCounter = 0
-  numFlags = numBombs
   revealedSquares = 0
-  
-})
+  numFlags = numBombs
+  flagCounterDisplay.innerHTML = numFlags
+  createGrid()
+  playGame()
+  flagCheck()
 
+})
 
 
 // ? THE FUNCTIONS ARE BELOW
@@ -133,7 +80,7 @@ function createGrid() {
     cell.innerHTML = i
     // ? Set the width and height of cells
     cell.style.width = `${100 / width}%`
-    cell.style.height = `${100 / height}%` 
+    cell.style.height = `${100 / height}%`
   }
 }
 
@@ -191,7 +138,7 @@ function assignNumbersOrEmpties() {
   for (let index = 0; index < cells.length; index++)
     if (!document.getElementById(`${index}`).classList.contains('bomb')) {
       const cellsToCheckArray = cellsToCheck(index)
-      //console.log(`cellstoCheckArray: ${cellsToCheckArray}`)
+      console.log(`cellstoCheckArray: ${cellsToCheckArray}`)
       let bombCount = 0
       for (let i = 0; i < cellsToCheckArray.length; i++) {
         if (document.getElementById(`${cellsToCheckArray[i]}`).classList.contains('bomb')) {
@@ -245,4 +192,71 @@ function revealEmpty(cell) {
       revealEmpty(newCell)
     }
   }
+}
+
+
+// ! Play Game Function
+
+function playGame() {
+  if (clickCounter === 0) {
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        if (revealedSquares < 211) {
+          if (clickCounter !== 0) {
+            //! Dig function goes here! 
+            console.log('you clicked')
+            if (cell.classList.contains('bomb')) {
+              gameOver()
+            } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
+              revealNumber(cell)
+              console.log(cell)
+              console.log(`No. Revealed Squares: ${revealedSquares}`)
+            } else if (!(cell.classList.contains('flag'))) {
+              revealEmpty(cell)
+              console.log(cell)
+              console.log(`No. Revealed Squares: ${revealedSquares}`)
+            }
+          } else {
+            assignBombs(Number(cell.id))
+            assignNumbersOrEmpties()
+            clickCounter++
+            console.log(clickCounter)
+            revealEmpty(cell)
+          }
+        } else {
+          alert('You won!')
+        }
+  
+  
+      })
+  
+    })
+  }
+}
+
+//! Flag Check Function 
+function flagCheck() {
+  cells.forEach(cell => {
+    cell.addEventListener('contextmenu', (event) => {
+      event.preventDefault()
+      console.log('right click')
+  
+      console.log(cell)
+  
+      if (cell.classList.contains('flag')) {
+        cell.classList.remove('flag')
+        cell.setAttribute('display', 'off')
+        numFlags++
+      } else if (numFlags === 0) {
+        alert('You are out of flags!')
+      } else if (cell.getAttribute('display') === 'off') {
+        cell.classList.add('flag')
+        cell.setAttribute('display', 'on')
+        numFlags--
+      } else {
+        return
+      }
+      flagCounterDisplay.innerHTML = numFlags
+    })
+  })
 }
