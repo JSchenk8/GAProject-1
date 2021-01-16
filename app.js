@@ -13,64 +13,28 @@ difficultyDropDown.addEventListener('change', (event) => {
 
 })
 
-
 // * Get grid
 const grid = document.querySelector('.grid')
 let cells = []
-
-
-
-
-
 
 // * Specify Width and Height in cells, number of bombs and number of flags dependant on difficulty
 let width = 0
 let height = 0
 let numBombs = 0
+let winningNumber = 0
 // * The First load counter
 let firstLoad = 0
-console.log(`first load = ${firstLoad}`)
 while (firstLoad === 0) {
   numBombs = changeableGrid()
   firstLoad++
-  console.log(`first load = ${firstLoad}`)
+  winningNumber = (width * height) - numBombs - 1
+  
 }
 
-
-function changeableGrid() {
-  if (difficulty === 'medium') {
-    width = 18
-    height = 14
-    numBombs = 40
-    grid.style.width = `${width * 50}px`
-    grid.style.height = `${height * 50}px`
-    createGrid()
-  } else if (difficulty === 'hard') {
-    width = 24
-    height = 20
-    numBombs = 99
-    grid.style.width = '900px'
-    grid.style.height = '700px'
-    createGrid()
-  } else {
-    width = 10
-    height = 10
-    numBombs = 10
-    grid.style.width = `${width * 50}px`
-    grid.style.height = `${height * 50}px`
-    createGrid()
-  }
-  
-  
-  return numBombs
-}
+// * Assign the number of Flags
 let numFlags = numBombs
-let winningNumber = (width * height) - numBombs - 1
-console.log(winningNumber)
 
-// const width = 18
-// const height = 14
-// const numBombs = 40
+console.log(winningNumber)
 
 // * Flag Counter
 const flagCounterDisplay = document.getElementById('flagsLeft')
@@ -346,7 +310,8 @@ function reset () {
   playGame()
   flagCheck()
   stopTimer()
-  console.log(`We Reset`)
+  console.log('We Reset')
+  winningNumber = (width * height) - numBombs - 1
 }
 
 function difficultyReset () {
@@ -362,5 +327,35 @@ function difficultyReset () {
   playGame()
   flagCheck()
   stopTimer()
-  console.log(`We Reset`)
+  console.log('We Reset')
+}
+
+// ! Function Changeable Grid
+
+function changeableGrid() {
+  if (difficulty === 'medium') {
+    width = 18
+    height = 14
+    numBombs = 40
+    grid.style.width = `${width * 50}px`
+    grid.style.height = `${height * 50}px`
+    createGrid()
+  } else if (difficulty === 'hard') {
+    width = 24
+    height = 20
+    numBombs = 99
+    grid.style.width = '900px'
+    grid.style.height = '700px'
+    createGrid()
+  } else {
+    width = 10
+    height = 10
+    numBombs = 10
+    grid.style.width = `${width * 50}px`
+    grid.style.height = `${height * 50}px`
+    createGrid()
+  }
+  
+  
+  return numBombs
 }
