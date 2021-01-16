@@ -1,24 +1,24 @@
+//! Global Variables 
 
 
-
-// !A round of gameplay: 
-let newGame = true
-
-
-//! Grid Creation
 // * Get grid
 const grid = document.querySelector('.grid')
-// * Specify Width and Height in cells, and number of bombs
+
+// * Specify Width and Height in cells, number of bombs and number of flags
 const width = 18
 const height = 14
 const numBombs = 40
 let numFlags = numBombs
+
 // * Set Grid Height and Width in px
 grid.style.width = `${width * 50}px`
 grid.style.height = `${height * 50}px`
+
 // * Array of the cells
-const cells = []
+let cells = []
 console.log(cells)
+
+
 // * Create the grid
 createGrid()
 
@@ -27,26 +27,27 @@ const flagCounterDisplay = document.getElementById('flagsLeft')
 console.log(flagCounterDisplay)
 flagCounterDisplay.innerHTML = numFlags
 
+// * Timer
+
 // * Number of revealed Squares
 let revealedSquares = 0
 
 // * Reset Button
 const resetButton = document.getElementById('playAgain')
 
-
+//* Timer Variables
+let timerId = 0
+let time = 0
+const timer = document.getElementById('timer')
+timer.innerHTML = time
 
 // ! Game Creation
 let clickCounter = 0
 playGame()
 
-
-
 // ! Flag Click
 
 flagCheck()
-
-
-
 
 // ! Reset Button
 
@@ -56,11 +57,15 @@ resetButton.addEventListener('click', () => {
   revealedSquares = 0
   numFlags = numBombs
   flagCounterDisplay.innerHTML = numFlags
+  cells = []
+  time = 0
+  timer.innerHTML = time
   createGrid()
   playGame()
   flagCheck()
-
+  stopTimer()
 })
+
 
 
 // ? THE FUNCTIONS ARE BELOW
@@ -88,6 +93,48 @@ function removeGrid(cells) {
   for (let i = 0; i < width * height; i++) {
     // ? Generate each element
     cells[i].remove()
+  }
+}
+
+// ! Play Game Function
+
+function playGame() {
+  if (clickCounter === 0) {
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        if (revealedSquares < 211) {
+          if (clickCounter !== 0) {
+            //! Dig function goes here! 
+            console.log('you clicked')
+            if (cell.classList.contains('bomb')) {
+              gameOver()
+            } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
+              revealNumber(cell)
+              console.log(cell)
+              console.log(`No. Revealed Squares: ${revealedSquares}`)
+            } else if (!(cell.classList.contains('flag'))) {
+              revealEmpty(cell)
+              console.log(cell)
+              console.log(`No. Revealed Squares: ${revealedSquares}`)
+            }
+          } else {
+            assignBombs(Number(cell.id))
+            assignNumbersOrEmpties()
+            clickCounter++
+            console.log(clickCounter)
+            revealEmpty(cell)
+            startTimer()
+          }
+        } else {
+          alert(`You won! Your time was: ${time}`)
+          stopTimer()
+          
+        }
+  
+  
+      })
+  
+    })
   }
 }
 
@@ -159,6 +206,7 @@ function assignNumbersOrEmpties() {
 
 function gameOver() {
   alert('Game Over')
+  stopTimer()
 }
 
 
@@ -195,44 +243,7 @@ function revealEmpty(cell) {
 }
 
 
-// ! Play Game Function
 
-function playGame() {
-  if (clickCounter === 0) {
-    cells.forEach(cell => {
-      cell.addEventListener('click', () => {
-        if (revealedSquares < 211) {
-          if (clickCounter !== 0) {
-            //! Dig function goes here! 
-            console.log('you clicked')
-            if (cell.classList.contains('bomb')) {
-              gameOver()
-            } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
-              revealNumber(cell)
-              console.log(cell)
-              console.log(`No. Revealed Squares: ${revealedSquares}`)
-            } else if (!(cell.classList.contains('flag'))) {
-              revealEmpty(cell)
-              console.log(cell)
-              console.log(`No. Revealed Squares: ${revealedSquares}`)
-            }
-          } else {
-            assignBombs(Number(cell.id))
-            assignNumbersOrEmpties()
-            clickCounter++
-            console.log(clickCounter)
-            revealEmpty(cell)
-          }
-        } else {
-          alert('You won!')
-        }
-  
-  
-      })
-  
-    })
-  }
-}
 
 //! Flag Check Function 
 function flagCheck() {
@@ -259,4 +270,19 @@ function flagCheck() {
       flagCounterDisplay.innerHTML = numFlags
     })
   })
+}
+
+// ! Timer
+
+function startTimer () {
+  time = 0
+  timerId = 0
+  timerId = setInterval(() => {
+    time++
+    timer.innerHTML = time
+  }, 1000)
+}
+
+function stopTimer() {
+  clearInterval(timerId)
 }
