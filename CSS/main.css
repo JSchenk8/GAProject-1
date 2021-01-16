@@ -15,6 +15,7 @@ body {
   flex-direction: row;
   border: 1px solid green;
   flex-wrap: wrap;
+
 }
 
 .cell {

@@ -1,45 +1,96 @@
 //! Global Variables 
+// * Difficulty Variables
+const difficultyDropDown = document.querySelector('#difficulties')
+let difficulty = 'easy'
+
+difficultyDropDown.addEventListener('change', (event) => {
+  
+  difficultyReset()
+  difficulty = event.target.value
+  console.log(difficulty)
+  numBombs = changeableGrid()
+  reset()
+
+})
 
 
 // * Get grid
 const grid = document.querySelector('.grid')
-
-// * Specify Width and Height in cells, number of bombs and number of flags
-const width = 18
-const height = 14
-const numBombs = 40
-let numFlags = numBombs
-
-// * Set Grid Height and Width in px
-grid.style.width = `${width * 50}px`
-grid.style.height = `${height * 50}px`
-
-// * Array of the cells
 let cells = []
-console.log(cells)
 
 
-// * Create the grid
-createGrid()
+
+
+
+
+// * Specify Width and Height in cells, number of bombs and number of flags dependant on difficulty
+let width = 0
+let height = 0
+let numBombs = 0
+// * The First load counter
+let firstLoad = 0
+console.log(`first load = ${firstLoad}`)
+while (firstLoad === 0) {
+  numBombs = changeableGrid()
+  firstLoad++
+  console.log(`first load = ${firstLoad}`)
+}
+
+
+function changeableGrid() {
+  if (difficulty === 'medium') {
+    width = 18
+    height = 14
+    numBombs = 40
+    grid.style.width = `${width * 50}px`
+    grid.style.height = `${height * 50}px`
+    createGrid()
+  } else if (difficulty === 'hard') {
+    width = 24
+    height = 20
+    numBombs = 99
+    grid.style.width = '900px'
+    grid.style.height = '700px'
+    createGrid()
+  } else {
+    width = 10
+    height = 10
+    numBombs = 10
+    grid.style.width = `${width * 50}px`
+    grid.style.height = `${height * 50}px`
+    createGrid()
+  }
+  
+  
+  return numBombs
+}
+let numFlags = numBombs
+let winningNumber = (width * height) - numBombs - 1
+console.log(winningNumber)
+
+// const width = 18
+// const height = 14
+// const numBombs = 40
 
 // * Flag Counter
 const flagCounterDisplay = document.getElementById('flagsLeft')
 console.log(flagCounterDisplay)
 flagCounterDisplay.innerHTML = numFlags
 
-// * Timer
-
 // * Number of revealed Squares
 let revealedSquares = 0
+
 
 // * Reset Button
 const resetButton = document.getElementById('playAgain')
 
-//* Timer Variables
+// * Timer Variables
 let timerId = 0
 let time = 0
 const timer = document.getElementById('timer')
 timer.innerHTML = time
+
+
 
 // ! Game Creation
 let clickCounter = 0
@@ -52,18 +103,7 @@ flagCheck()
 // ! Reset Button
 
 resetButton.addEventListener('click', () => {
-  removeGrid(cells)
-  clickCounter = 0
-  revealedSquares = 0
-  numFlags = numBombs
-  flagCounterDisplay.innerHTML = numFlags
-  cells = []
-  time = 0
-  timer.innerHTML = time
-  createGrid()
-  playGame()
-  flagCheck()
-  stopTimer()
+  reset()
 })
 
 
@@ -73,6 +113,8 @@ resetButton.addEventListener('click', () => {
 //! Grid Creation button:
 function createGrid() {
   for (let i = 0; i < width * height; i++) {
+    // grid.style.width = ''
+    // grid.style.height = ''
     // ? Generate each element
     const cell = document.createElement('div')
     cell.classList.add('cell')
@@ -86,6 +128,7 @@ function createGrid() {
     // ? Set the width and height of cells
     cell.style.width = `${100 / width}%`
     cell.style.height = `${100 / height}%`
+    
   }
 }
 
@@ -102,7 +145,7 @@ function playGame() {
   if (clickCounter === 0) {
     cells.forEach(cell => {
       cell.addEventListener('click', () => {
-        if (revealedSquares < 211) {
+        if (revealedSquares < winningNumber) {
           if (clickCounter !== 0) {
             //! Dig function goes here! 
             console.log('you clicked')
@@ -144,7 +187,7 @@ function assignBombs(firstClickNumber) {
   const bombArray = []
   const noBombCells = cellsToCheck(firstClickNumber)
   while (bombArray.length < numBombs) {
-    const randomNumber = Math.floor(Math.random() * 251) + 1
+    const randomNumber = Math.floor(Math.random() * (width * height))
     if ((bombArray.indexOf(randomNumber) === -1) && (noBombCells.indexOf(randomNumber) === -1)) {
       bombArray.push(randomNumber)
     }
@@ -285,4 +328,39 @@ function startTimer () {
 
 function stopTimer() {
   clearInterval(timerId)
+}
+
+// ! Reset Function
+
+
+function reset () {
+  removeGrid(cells)
+  clickCounter = 0
+  revealedSquares = 0
+  numFlags = numBombs
+  flagCounterDisplay.innerHTML = numFlags
+  cells = []
+  time = 0
+  timer.innerHTML = time
+  createGrid()
+  playGame()
+  flagCheck()
+  stopTimer()
+  console.log(`We Reset`)
+}
+
+function difficultyReset () {
+  removeGrid(cells)
+  clickCounter = 0
+  revealedSquares = 0
+  numFlags = numBombs
+  flagCounterDisplay.innerHTML = numFlags
+  cells = []
+  time = 0
+  timer.innerHTML = time
+  //createGrid()
+  playGame()
+  flagCheck()
+  stopTimer()
+  console.log(`We Reset`)
 }
