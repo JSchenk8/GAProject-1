@@ -1,47 +1,109 @@
 * {
   box-sizing: border-box;
+  font-family: 'Carrois Gothic SC', sans-serif;
+  font-weight: bold;
 }
-
+div {
+  font-family: 'Carrois Gothic SC', sans-serif;
+  font-size: 20px;
+}
 body {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url(../Images/9789134_web1_starwarssounds1sub121317.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.header {
+width: 100vw;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+#logo {
+  background-image: url(../Images/StarWarsColor.png);
+  background-size: 500px 200px;
+  background-repeat: no-repeat;
+  width: 500px;
+  height: 200px;
+  margin: 100px auto 50px auto;
+
 }
 
 .grid {
   display: flex;
   flex-direction: row;
-  border: 1px solid green;
+ 
   flex-wrap: wrap;
 
 }
 
 .cell {
-  border: 1px solid blue;
+  border: 3px solid;
+  border-color: white darkgrey darkgrey white;
   font-size: 10px;
+
+  background-image: linear-gradient(300deg, #B9EAFF, #F5F5F5, white);
+
+  
 }
 
 .scores {
   display: flex;
-  width: 400px;
+  width: 500px;
+  justify-content: space-around;
+
 }
 
 
 .flag {
-  background-color: red!important; 
   z-index: 2;
+
+  background-image: url(../Images/Rebel_Alliance_logo.svg.png), linear-gradient(300deg, #B9EAFF, #F5F5F5, white);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  padding: 10px;
+
+
 }
 
 .numberOn {
   background-color: grey;
+  background-image: linear-gradient(300deg, dodgerblue, #f5f5f5, white);
+  font-size: 150%;
+  text-align: center;
+  
+  
 }
 
 .emptyOn {
-  background-color: lightblue;
+  background-image: linear-gradient(300deg, #F5F5F5, white);
+  background-size: cover;
+  border: solid 3px white;
 }
+
+/*
+.bombOn {
+  background-image: url(../Images/57-579175_darth-vader-cartoon-head-hd-png-download.png);
+  background-size: cover;
+  display: none;
+}
+*/
 
 #playAgain {
   margin: 20px;
+}
+
+#difficulties {
+  width: 62%;
+}
+
+.select-selected {
+  background-color: dodgerblue;
 }

@@ -28,7 +28,6 @@ while (firstLoad === 0) {
   numBombs = changeableGrid()
   firstLoad++
   winningNumber = (width * height) - numBombs - 1
-  
 }
 
 // * Assign the number of Flags
@@ -88,7 +87,7 @@ function createGrid() {
     grid.appendChild(cell)
     cells.push(cell)
     // ? Display cell index
-    cell.innerHTML = i
+    // cell.innerHTML = i
     // ? Set the width and height of cells
     cell.style.width = `${100 / width}%`
     cell.style.height = `${100 / height}%`
@@ -203,7 +202,7 @@ function assignNumbersOrEmpties() {
         document.getElementById(`${index}`).classList.add('empty')
       } else {
         document.getElementById(`${index}`).classList.add('number')
-        document.getElementById(`${index}`).innerHTML = bombCount
+        document.getElementById(`${index}`).setAttribute('bombCount', `${bombCount}`)
       }
     }
 }
@@ -224,6 +223,7 @@ function revealNumber(cell) {
   cell.classList.add('numberOn')
   cell.setAttribute('checked', 'true')
   revealedSquares++
+  cell.innerHTML = cell.getAttribute('bombCount')
 }
 
 
