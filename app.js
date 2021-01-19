@@ -12,6 +12,10 @@ difficultyDropDown.addEventListener('change', (event) => {
   reset()
 })
 
+// * High Score Variable
+
+
+
 // * Get grid
 const grid = document.querySelector('.grid')
 let cells = []
@@ -68,6 +72,9 @@ playGame()
 // ! Flag Click
 
 flagCheck()
+
+// ! MOBILE FLAG CLICK EVENT TO ADD
+// mobileFlagCheck()
 
 // ! Reset Button
 
@@ -255,6 +262,11 @@ function gameOver() {
     reset()
   })
   stopTimer()
+  const bombsArray = document.querySelectorAll('.bomb')
+  console.log(bombsArray)
+  bombsArray.forEach(cell => {
+    cell.classList.add('bombOn')
+  })
 }
 
 // ! Winner Function
@@ -268,6 +280,7 @@ function winner() {
     reset()
     console.log('winnerReset')
   })  
+  
 }
 //! Reveal Number function
 
@@ -331,6 +344,35 @@ function flagCheck() {
     })
   })
 }
+
+// ! ------------- Mobile Flag Clicker Attempt 1?
+
+// function mobileFlagCheck() {
+//   cells.forEach(cell => {
+//     cell.addEventListener('dblclick', (event) => {
+      
+//       console.log('double click')
+  
+//       console.log(cell)
+  
+//       if (cell.classList.contains('flag')) {
+//         cell.classList.remove('flag')
+//         cell.setAttribute('display', 'off')
+//         numFlags++
+//       } else if (numFlags === 0) {
+//         alert('You are out of flags!')
+//       } else if (cell.getAttribute('display') === 'off') {
+//         cell.classList.add('flag')
+//         cell.setAttribute('display', 'on')
+//         numFlags--
+//       } else {
+//         return
+//       }
+//       flagCounterDisplay.innerHTML = numFlags
+//     })
+//   })
+// }
+
 
 // ! Timer
 
