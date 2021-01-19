@@ -10,7 +10,6 @@ difficultyDropDown.addEventListener('change', (event) => {
   console.log(difficulty)
   numBombs = changeableGrid()
   reset()
-
 })
 
 // * Get grid
@@ -44,8 +43,9 @@ flagCounterDisplay.innerHTML = numFlags
 let revealedSquares = 0
 
 
-// * Reset Button
+// * Reset Buttons
 const resetButton = document.getElementById('playAgain')
+
 
 // * Timer Variables
 let timerId = 0
@@ -53,6 +53,12 @@ let time = 0
 const timer = document.getElementById('timer')
 timer.innerHTML = time
 
+// * Winner Modal
+const winnerModal = document.getElementById('winnerModal')
+const winningTime = document.getElementById('winningTime')
+
+// * Loser Modal
+const loserModal = document.getElementById('loserModal')
 
 
 // ! Game Creation
@@ -69,6 +75,23 @@ resetButton.addEventListener('click', () => {
   reset()
 })
 
+
+
+
+//! Rules Modal
+
+const modal = document.getElementById('rulesModal')
+const rulesButton = document.getElementById('theRules')
+const closeRulesModal = document.getElementById('close')
+
+rulesButton.addEventListener('click', () => {
+  modal.style.display = 'block'
+})
+
+closeRulesModal.addEventListener('click', () => {
+  modal.style.display = 'none'
+  console.log('Closing the Modal!')
+})
 
 
 // ? THE FUNCTIONS ARE BELOW
@@ -132,9 +155,8 @@ function playGame() {
             startTimer()
           }
         } else {
-          alert(`You won! Your time was: ${time}`)
           stopTimer()
-          
+          winner()
         }
   
   
@@ -201,8 +223,24 @@ function assignNumbersOrEmpties() {
       if (bombCount === 0) {
         document.getElementById(`${index}`).classList.add('empty')
       } else {
+        if (difficulty === 'easy' || difficulty === 'medium') {
+          document.getElementById(`${index}`).classList.add('centeredNumber')
+        }
         document.getElementById(`${index}`).classList.add('number')
         document.getElementById(`${index}`).setAttribute('bombCount', `${bombCount}`)
+        if (bombCount === 1) {
+          document.getElementById(`${index}`).classList.add('one')
+        } else if (bombCount === 2) {
+          document.getElementById(`${index}`).classList.add('two')
+        } else if (bombCount === 3) {
+          document.getElementById(`${index}`).classList.add('three')
+        } else if (bombCount === 4) {
+          document.getElementById(`${index}`).classList.add('four')
+        } else if (bombCount === 5) {
+          document.getElementById(`${index}`).classList.add('five')
+        } else if (bombCount === 6) {
+          document.getElementById(`${index}`).classList.add('six')
+        }
       }
     }
 }
@@ -211,11 +249,26 @@ function assignNumbersOrEmpties() {
 //! Game Over function
 
 function gameOver() {
-  alert('Game Over')
+  loserModal.style.display = 'block'
+  const loserResetButton = document.getElementById('loserPlayAgain')
+  loserResetButton.addEventListener('click', () => {
+    reset()
+  })
   stopTimer()
 }
 
+// ! Winner Function
 
+function winner() {
+  
+  winnerModal.style.display = 'block'
+  winningTime.innerHTML = time
+  const winnerResetButton = document.getElementById('winnerPlayAgain')
+  winnerResetButton.addEventListener('click', () => {
+    reset()
+    console.log('winnerReset')
+  })  
+}
 //! Reveal Number function
 
 function revealNumber(cell) {
@@ -299,6 +352,12 @@ function stopTimer() {
 
 function reset () {
   removeGrid(cells)
+  if (winnerModal.style.display === 'block') {
+    winnerModal.style.display = 'none'
+  }
+  if (loserModal.style.display === 'block') {
+    loserModal.style.display = 'none'
+  }
   clickCounter = 0
   revealedSquares = 0
   numFlags = numBombs

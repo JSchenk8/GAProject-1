@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- ! Link CSS here-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/main.css">
   <title>Project 1</title>
 </head>
 <body>
   <section class= "header">
-    <div id="logo"></div>
+    <div id="logo"><h1>ZOMBIESWEEPER</h1></div>
   </section>
   <section class="scores">
     <div><p>Select Difficulty:
@@ -24,15 +28,55 @@
         </select>
       </span>
     </p></div>
+    <div id="highscore"><p>Fastest Time:<span></span></p></div>
+    <div id="theRules"><p>The Rules</p></div>
     <div><p>Flags left: <span id="flagsLeft"></span></p></div>
     <div><p> Time: <span id="timer"></span></p></div>
   </section>
-  <section>
+  <section id="theGrid">
     <div class="grid">
 
     </div>
   </section>
+
   <button id="playAgain">Play Again?</button>
+
+  <div id="rulesModal" class="modal">
+    <div class="modal-content">
+      <span id="close">&times;</span>
+      <p>Welcome to Zombiesweeper! <br> <br>
+        You have survived the initial onslaught of the zombie apocolypse, and now you must check for more zombies to stay alive! <br> <br>
+        The game works exactly the same as the original Windows Microsoft game Minesweeper <br><br>
+        To start the game: click on a tile, this will reveal the clues to where the zombies are! <br><br>
+        The numbers show how many neighbouring squares contain a zombie, and an empty square has no neighbouring zombies <br><br>
+        If you think a zombie (or mine) is present on a square, right click to place an axe (or flag) to keep the zombie away <br><br>
+        The game is won when all the squares which do not contain zombies are revealed! <br><br>
+        The timer will score how long it takes you to identify all the zombies, and your high score will show the fastest time per difficulty <br> <br>
+        Good luck! 
+      </p>
+    </div>
+  </div>
+
+  <div id="winnerModal" class="modal">
+    <div class="modal-content">
+      <p>
+        You survived! <br><br>
+        Your time was: <span id="winningTime"></span> seconds <br><br>
+      </p>
+      <button id="winnerPlayAgain">Play Again?</button>
+    </div>
+  </div>
+
+  <div id="loserModal" class="modal">
+    <div class="modal-content">
+      <p>
+        Oh no! You've been eaten!!! <br><br>
+        <button id="loserPlayAgain">Play Again?</button>
+      </p>
+    </div>
+  </div>
+
+
   <!-- ! link JS here-->
   <script src="app.js"></script>
 </body>
