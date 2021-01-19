@@ -1,3 +1,5 @@
+console.log('hello')
+
 //! Global Variables 
 // * Difficulty Variables
 const difficultyDropDown = document.querySelector('#difficulties')
