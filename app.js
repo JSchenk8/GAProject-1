@@ -232,9 +232,12 @@ function assignNumbersOrEmpties() {
       if (bombCount === 0) {
         document.getElementById(`${index}`).classList.add('empty')
       } else {
-        if (difficulty === 'easy' || difficulty === 'medium') {
-          document.getElementById(`${index}`).classList.add('centeredNumber')
+        if (difficulty === 'easy') {
+          document.getElementById(`${index}`).classList.add('centeredNumberEasy')
         }
+        if (difficulty === 'hard') {
+          document.getElementById(`${index}`).classList.add('numberHard')
+        } 
         document.getElementById(`${index}`).classList.add('number')
         document.getElementById(`${index}`).setAttribute('bombCount', `${bombCount}`)
         if (bombCount === 1) {
@@ -440,22 +443,26 @@ function changeableGrid() {
     width = 18
     height = 14
     numBombs = 40
-    grid.style.width = `${width * 50}px`
-    grid.style.height = `${height * 50}px`
+    // grid.style.width = `${width * 50}px`
+    // grid.style.height = `${height * 50}px`
+    grid.style.width = '40vw'
+    grid.style.height = '31.11vw'
     createGrid()
   } else if (difficulty === 'hard') {
     width = 24
     height = 20
     numBombs = 99
-    grid.style.width = '900px'
-    grid.style.height = '700px'
+    grid.style.width = '40vw'
+    grid.style.height = '33.33vw'
     createGrid()
   } else {
     width = 10
     height = 10
     numBombs = 10
-    grid.style.width = `${width * 50}px`
-    grid.style.height = `${height * 50}px`
+    // grid.style.width = `${width * 50}px`
+    // grid.style.height = `${height * 50}px`
+    grid.style.width = '30vw'
+    grid.style.height = '30vw'
     createGrid()
   }
   
