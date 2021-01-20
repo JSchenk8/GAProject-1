@@ -353,54 +353,34 @@ function flagCheck() {
     cell.addEventListener('contextmenu', (event) => {
       event.preventDefault()
       console.log('right click')
-
-
-      if (cell.classList.contains('flag')) {
-        cell.classList.remove('flag')
-        cell.setAttribute('display', 'off')
-        numFlags++
-      } else if (numFlags === 0) {
-        alert('You are out of flags!')
-      } else if (cell.getAttribute('display') === 'off') {
-        cell.classList.add('flag')
-        cell.setAttribute('display', 'on')
-        numFlags--
-      } else {
-        return
-      }
-      flagCounterDisplay.innerHTML = numFlags
+      flagCheckInner(cell)
+    })
+    cell.addEventListener('dblclick', () => {
+      console.log('double click')
+      flagCheckInner(cell)
     })
   })
 }
 
-// ! ------------- Mobile Flag Clicker Attempt 1?
 
-// function mobileFlagCheck() {
-//   cells.forEach(cell => {
-//     cell.addEventListener('dblclick', (event) => {
+function flagCheckInner(cell) {
 
-//       console.log('double click')
 
-//       console.log(cell)
-
-//       if (cell.classList.contains('flag')) {
-//         cell.classList.remove('flag')
-//         cell.setAttribute('display', 'off')
-//         numFlags++
-//       } else if (numFlags === 0) {
-//         alert('You are out of flags!')
-//       } else if (cell.getAttribute('display') === 'off') {
-//         cell.classList.add('flag')
-//         cell.setAttribute('display', 'on')
-//         numFlags--
-//       } else {
-//         return
-//       }
-//       flagCounterDisplay.innerHTML = numFlags
-//     })
-//   })
-// }
-
+  if (cell.classList.contains('flag')) {
+    cell.classList.remove('flag')
+    cell.setAttribute('display', 'off')
+    numFlags++
+  } else if (numFlags === 0) {
+    alert('You are out of flags!')
+  } else if (cell.getAttribute('display') === 'off') {
+    cell.classList.add('flag')
+    cell.setAttribute('display', 'on')
+    numFlags--
+  } else {
+    return
+  }
+  flagCounterDisplay.innerHTML = numFlags
+}
 
 // ! Timer
 
