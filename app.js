@@ -1,12 +1,18 @@
-console.log('hello')
-
 //! Global Variables 
 // * Difficulty Variables
 const difficultyDropDown = document.querySelector('#difficulties')
 let difficulty = 'easy'
+document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('easyHighScore')}`
+
 
 difficultyDropDown.addEventListener('change', (event) => {
-  
+  if (event.target.value === 'easy') {
+    document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('easyHighScore')}`
+  } else if (event.target.value === 'medium') {
+    document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('mediumHighScore')}`
+  } else {
+    document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('hardHighScore')}`
+  }
   difficultyReset()
   difficulty = event.target.value
   console.log(difficulty)
@@ -14,7 +20,6 @@ difficultyDropDown.addEventListener('change', (event) => {
   reset()
 })
 
-// * High Score Variable
 
 
 
@@ -38,11 +43,9 @@ while (firstLoad === 0) {
 // * Assign the number of Flags
 let numFlags = numBombs
 
-console.log(winningNumber)
 
 // * Flag Counter
 const flagCounterDisplay = document.getElementById('flagsLeft')
-console.log(flagCounterDisplay)
 flagCounterDisplay.innerHTML = numFlags
 
 // * Number of revealed Squares
@@ -65,6 +68,14 @@ const winningTime = document.getElementById('winningTime')
 
 // * Loser Modal
 const loserModal = document.getElementById('loserModal')
+
+// * High Score Variable
+
+const highScore = [100000]
+
+
+
+
 
 
 // ! Game Creation
@@ -99,7 +110,6 @@ rulesButton.addEventListener('click', () => {
 
 closeRulesModal.addEventListener('click', () => {
   modal.style.display = 'none'
-  console.log('Closing the Modal!')
 })
 
 
@@ -123,7 +133,7 @@ function createGrid() {
     // ? Set the width and height of cells
     cell.style.width = `${100 / width}%`
     cell.style.height = `${100 / height}%`
-    
+
   }
 }
 
@@ -148,18 +158,13 @@ function playGame() {
               gameOver()
             } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
               revealNumber(cell)
-              console.log(cell)
-              console.log(`No. Revealed Squares: ${revealedSquares}`)
             } else if (!(cell.classList.contains('flag'))) {
               revealEmpty(cell)
-              console.log(cell)
-              console.log(`No. Revealed Squares: ${revealedSquares}`)
             }
           } else {
             assignBombs(Number(cell.id))
             assignNumbersOrEmpties()
             clickCounter++
-            console.log(clickCounter)
             revealEmpty(cell)
             startTimer()
           }
@@ -167,10 +172,10 @@ function playGame() {
           stopTimer()
           winner()
         }
-  
-  
+
+
       })
-  
+
     })
   }
 }
@@ -222,7 +227,6 @@ function assignNumbersOrEmpties() {
   for (let index = 0; index < cells.length; index++)
     if (!document.getElementById(`${index}`).classList.contains('bomb')) {
       const cellsToCheckArray = cellsToCheck(index)
-      console.log(`cellstoCheckArray: ${cellsToCheckArray}`)
       let bombCount = 0
       for (let i = 0; i < cellsToCheckArray.length; i++) {
         if (document.getElementById(`${cellsToCheckArray[i]}`).classList.contains('bomb')) {
@@ -237,7 +241,7 @@ function assignNumbersOrEmpties() {
         }
         if (difficulty === 'hard') {
           document.getElementById(`${index}`).classList.add('numberHard')
-        } 
+        }
         document.getElementById(`${index}`).classList.add('number')
         document.getElementById(`${index}`).setAttribute('bombCount', `${bombCount}`)
         if (bombCount === 1) {
@@ -268,7 +272,6 @@ function gameOver() {
   })
   stopTimer()
   const bombsArray = document.querySelectorAll('.bomb')
-  console.log(bombsArray)
   bombsArray.forEach(cell => {
     cell.classList.add('bombOn')
   })
@@ -277,15 +280,38 @@ function gameOver() {
 // ! Winner Function
 
 function winner() {
-  
+
   winnerModal.style.display = 'block'
   winningTime.innerHTML = time
+  highScore.push(time)
+  if (highScore[0] < highScore[1]) {
+    highScore.pop()
+  } else {
+    highScore[0] = highScore[1]
+    highScore.pop()
+  }
+  if (localStorage) {
+    if (difficulty === 'easy') {
+      localStorage.setItem('easyHighScore', highScore[0])
+    } else if (difficulty === 'medium') {
+      localStorage.setItem('mediumHighScore', highScore[0])
+    } else {
+      localStorage.setItem('hardHighScore', highScore[0])
+    }
+  }
+  if (difficulty === 'easy') {
+    document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('easyHighScore')}`
+  } else if (difficulty === 'medium') {
+    document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('mediumHighScore')}`
+  } else {
+    document.getElementById('displayHighScore').innerHTML = `${localStorage.getItem('hardHighScore')}`
+  }
+  
   const winnerResetButton = document.getElementById('winnerPlayAgain')
   winnerResetButton.addEventListener('click', () => {
     reset()
-    console.log('winnerReset')
-  })  
-  
+  })
+
 }
 //! Reveal Number function
 
@@ -308,8 +334,6 @@ function revealEmpty(cell) {
   const neighbourArray = cellsToCheck(Number(cell.id))
   for (let i = 1; i < neighbourArray.length; i++) {
     const newCell = document.getElementById(`${neighbourArray[i]}`)
-    console.log('Checking cell now')
-    console.log(`The index is ${i}`)
     if (newCell.getAttribute('checked') === 'true') {
       console.log('This cell has already been checked')
     } else if (newCell.classList.contains('number')) {
@@ -329,9 +353,8 @@ function flagCheck() {
     cell.addEventListener('contextmenu', (event) => {
       event.preventDefault()
       console.log('right click')
-  
-      console.log(cell)
-  
+
+
       if (cell.classList.contains('flag')) {
         cell.classList.remove('flag')
         cell.setAttribute('display', 'off')
@@ -355,11 +378,11 @@ function flagCheck() {
 // function mobileFlagCheck() {
 //   cells.forEach(cell => {
 //     cell.addEventListener('dblclick', (event) => {
-      
+
 //       console.log('double click')
-  
+
 //       console.log(cell)
-  
+
 //       if (cell.classList.contains('flag')) {
 //         cell.classList.remove('flag')
 //         cell.setAttribute('display', 'off')
@@ -381,7 +404,7 @@ function flagCheck() {
 
 // ! Timer
 
-function startTimer () {
+function startTimer() {
   time = 0
   timerId = 0
   timerId = setInterval(() => {
@@ -397,7 +420,7 @@ function stopTimer() {
 // ! Reset Function
 
 
-function reset () {
+function reset() {
   removeGrid(cells)
   if (winnerModal.style.display === 'block') {
     winnerModal.style.display = 'none'
@@ -420,7 +443,7 @@ function reset () {
   winningNumber = (width * height) - numBombs - 1
 }
 
-function difficultyReset () {
+function difficultyReset() {
   removeGrid(cells)
   clickCounter = 0
   revealedSquares = 0
@@ -465,7 +488,7 @@ function changeableGrid() {
     grid.style.height = '30vw'
     createGrid()
   }
-  
-  
+
+
   return numBombs
 }
