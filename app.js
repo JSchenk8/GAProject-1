@@ -1,3 +1,4 @@
+const mediaQuery = window.matchMedia('(max-width: 1024px)')
 //! Global Variables 
 // * Difficulty Variables
 const difficultyDropDown = document.querySelector('#difficulties')
@@ -460,6 +461,7 @@ function difficultyReset() {
 
 // ! Function Changeable Grid
 
+
 function changeableGrid() {
   if (difficulty === 'medium') {
     width = 18
@@ -483,11 +485,20 @@ function changeableGrid() {
     numBombs = 10
     // grid.style.width = `${width * 50}px`
     // grid.style.height = `${height * 50}px`
-    grid.style.width = '30vw'
-    grid.style.height = '30vw'
+    if (mediaQuery.matches) {
+      grid.style.width = '60vw'
+      grid.style.height = '60vw'
+      console.log('media Query  matches')
+    } else {
+      grid.style.width = '30vw'
+      grid.style.height = '30vw'
+      console.log('media query does not match')
+    }
     createGrid()
   }
 
 
   return numBombs
 }
+
+
