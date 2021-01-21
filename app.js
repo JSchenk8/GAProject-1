@@ -1,5 +1,7 @@
-const mediaQuery = window.matchMedia('(max-width: 1024px)')
+
 //! Global Variables 
+//* Media Query Variable
+const mediaQuery = window.matchMedia('(max-width: 1024px)')
 // * Difficulty Variables
 const difficultyDropDown = document.querySelector('#difficulties')
 let difficulty = 'easy'
