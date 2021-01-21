@@ -233,6 +233,10 @@ p {
   z-index: 4;
 } */
 
+#mobileChoices {
+  display: none;
+}
+
 @keyframes revealBlood {
   0% {
     opacity: 0.1;
@@ -286,6 +290,41 @@ p {
 
 }
 
+@media only screen and (max-width: 1024px) {
+  #mobileChoices {
+    display: flex;
+    justify-content: space-evenly;
+    width: 500px;
+  }
+  #mobileDig {
+    width: 200px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #mobileFlag{
+    width: 200px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #mobileDigButton{
+    background-image: url(../Images/sticker-cartoon-spooky-door-knob-illustrated-sticker-cartoon-spooky-door-knob-146087227.jpg), linear-gradient(300deg, lightgrey, #F5F5F5, white);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    position: center;
+  }
+  #mobileFlagButton{
+    background-image: url(../Images/bloody-axe-png-transparent-free-png-images-clipart-download-bloody-axe-png-920_943.jpg), linear-gradient(300deg, lightgrey, #F5F5F5, white);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    position: center;
+  }
+}
 
 
 @media only screen and (max-width: 970px) {

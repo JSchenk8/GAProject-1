@@ -73,7 +73,22 @@ const loserModal = document.getElementById('loserModal')
 
 const highScore = [100000]
 
+//* Mobile Button Variables
 
+const mobileDigButton = document.getElementById('mobileDigButton')
+const mobileFlagButton = document.getElementById('mobileFlagButton')
+let leftClickDefault = true
+console.log(leftClickDefault)
+
+mobileDigButton.addEventListener('click', () => {
+  leftClickDefault = true
+  console.log(leftClickDefault)
+})
+
+mobileFlagButton.addEventListener('click', () => {
+  leftClickDefault = false
+  console.log(leftClickDefault)
+})
 
 
 
@@ -150,29 +165,33 @@ function playGame() {
   if (clickCounter === 0) {
     cells.forEach(cell => {
       cell.addEventListener('click', () => {
-        if (revealedSquares < winningNumber) {
-          if (clickCounter !== 0) {
-            //! Dig function goes here! 
-            console.log('you clicked')
-            if (cell.classList.contains('bomb')) {
-              gameOver()
-            } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
-              revealNumber(cell)
-            } else if (!(cell.classList.contains('flag'))) {
+        if (leftClickDefault) {
+          if (revealedSquares < winningNumber) {
+            if (clickCounter !== 0) {
+              //! Dig function goes here! 
+              console.log('you clicked')
+              if (cell.classList.contains('bomb')) {
+                gameOver()
+              } else if (cell.classList.contains('number') && !(cell.classList.contains('flag'))) {
+                revealNumber(cell)
+              } else if (!(cell.classList.contains('flag'))) {
+                revealEmpty(cell)
+              }
+            } else {
+              assignBombs(Number(cell.id))
+              assignNumbersOrEmpties()
+              clickCounter++
               revealEmpty(cell)
+              startTimer()
             }
           } else {
-            assignBombs(Number(cell.id))
-            assignNumbersOrEmpties()
-            clickCounter++
-            revealEmpty(cell)
-            startTimer()
+            stopTimer()
+            winner()
           }
         } else {
-          stopTimer()
-          winner()
+          flagCheckInner(cell)
         }
-
+    
 
       })
 
