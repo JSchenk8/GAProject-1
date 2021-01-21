@@ -91,6 +91,28 @@ h2 {
   margin: 0 10px;
 }
 
+.scoresPadding {
+  padding: 10px;
+}
+
+#selectDifficulty {
+  padding: 10px;
+}
+#highscore {
+  padding: 10px;
+}
+#theRules {
+  padding: 10px;
+}
+
+#flagsDiv {
+  padding: 10px;
+}
+
+#timeDiv {
+  padding: 10px;
+}
+
 p {
   font-family: 'Creepster', cursive;
   letter-spacing: 3px;
@@ -226,12 +248,11 @@ p {
 #theRules:focus {
   cursor: pointer;
 }
-/* 
-.gridLoser {
-  background-image: url(../Images/blood-splatter-voice.svg), linear-gradient(300deg, #f5f5f5, white);
-  background-size: cover;
-  z-index: 4;
-} */
+
+#rulesIntro {
+  font-family: 'Nosifer', cursive;
+  color: #CC0829;
+}
 
 #mobileChoices {
   display: none;
@@ -294,6 +315,7 @@ p {
   #mobileChoices {
     display: flex;
     justify-content: space-evenly;
+    max-width: 100vw;
     width: 500px;
   }
   #mobileDig {
@@ -358,7 +380,7 @@ p {
   }
   h2 {
     display: block;
-    font-size: 50px;
+    font-size: 40px;
     color:#CC0829;
     font-family: 'Nosifer', cursive;
     text-align: center;

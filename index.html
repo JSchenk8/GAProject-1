@@ -19,7 +19,7 @@
     <div id="logo"><h1>ZOMBIESWEEPER</h1><h2>ZOMBIE<br>SWEEPER</h2></div>
   </section>
   <section class="scores">
-    <div id="selectDifficulty"><p>Select Difficulty:
+    <div id="selectDifficulty" class="scoresPadding"><p>Select Difficulty:
       <span class="custom-select">
         <select name="difficulties" id="difficulties">
           <option value="easy">Easy</option>
@@ -28,10 +28,10 @@
         </select>
       </span>
     </p></div>
-    <div id="highscore"><p>Fastest Time:<span id="displayHighScore"></span></p></div>
-    <div id="theRules"><p>The Rules</p></div>
-    <div><p>Flags left: <span id="flagsLeft"></span></p></div>
-    <div><p> Time: <span id="timer"></span></p></div>
+    <div id="highscore" class="scoresPadding"><p>Fastest Time:<span id="displayHighScore"></span></p></div>
+    <div id="theRules" class="scoresPadding"><p>The Rules</p></div>
+    <div class="scoresPadding"><p>Flags left: <span id="flagsLeft"></span></p></div>
+    <div class="scoresPadding"><p> Time: <span id="timer"></span></p></div>
   </section>
   <section id="theGrid">
     <div class="grid">
@@ -45,10 +45,11 @@
   <div id="rulesModal" class="modal">
     <div class="modal-content">
       <span id="close">&times;</span>
-      <p>Welcome to Zombiesweeper! <br><br>
+      <p> <span id="rulesIntro">Welcome to Zombiesweeper!</span> <br><br>
         You have survived the initial onslaught of the zombie apocolypse, and now you must check for more zombies to stay alive! <br> <br>
         The game works exactly the same as the original Windows Microsoft game Minesweeper <br><br>
-        To start the game: click on a tile, this will reveal the clues to where the zombies are! <br><br>
+        If you are on touch screen, select an action - reveal (left click) or defend (right click) a cell <br><br>
+        To start the game: left click on a tile, this will reveal the clues to where the zombies are! <br><br>
         The numbers show how many neighbouring squares contain a zombie and an empty square has no neighbouring zombies <br><br>
         If you think a zombie (or mine) is present on a square, right click to place an axe (or flag) to keep the zombie away <br><br>
         The game is won when all the squares which do not contain zombies are revealed! <br><br>
