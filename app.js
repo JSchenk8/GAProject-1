@@ -136,8 +136,6 @@ closeRulesModal.addEventListener('click', () => {
 //! Grid Creation button:
 function createGrid() {
   for (let i = 0; i < width * height; i++) {
-    // grid.style.width = ''
-    // grid.style.height = ''
     // ? Generate each element
     const cell = document.createElement('div')
     cell.classList.add('cell')
@@ -146,8 +144,6 @@ function createGrid() {
     cell.id = `${i}`
     grid.appendChild(cell)
     cells.push(cell)
-    // ? Display cell index
-    // cell.innerHTML = i
     // ? Set the width and height of cells
     cell.style.width = `${100 / width}%`
     cell.style.height = `${100 / height}%`
