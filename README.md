@@ -1,12 +1,12 @@
 ![](ReadMeImages/GALogo.png)
 
-###General Assembly Software Engineering Immersive
+### General Assembly Software Engineering Immersive
 
-#Project One: ZombieSweeper
+# Project One: ZombieSweeper
 
-INSERT SCREENSHOT OF ZOMBIESWEEPER
+![](ReadMeImages/DesktopScreenshot.png)
 
-##The Overview:
+## The Overview:
 
 The project set by General Assembly is a one week individual coding task using HTML5, CSS3 and ES6 to build a functional website grid game. 
 
@@ -14,9 +14,9 @@ In order to challenge my functional logic writing skills I chose Minesweeper, wh
 
 You can play my game here: [](https://jschenk8.github.io/GAProject-1/)
 
-###Minesweeper:
+### Minesweeper:
 
-![](ReadMeImages/DesktopScreenshot.png)
+![](ReadMeImages/unnamed.jpg)
 
 Minesweeper is a classic Microsoft Windows grid game.
 
@@ -30,7 +30,7 @@ The player can right click to place a flag - this marks a cell which the player 
 
 The player wins once all the cells which do not contain bombs are revealed. 
 
-###The Brief
+### The Brief
 
 * Render a game in the browser
 * Include seperate HTML / CSS / JavaScript files
@@ -43,7 +43,7 @@ The player wins once all the cells which do not contain bombs are revealed.
 * Different Board sizes
 * Mobile optimisation if possible
 
-###Technologies Used
+### Technologies Used
 
 * HTML5
 * CSS3
@@ -52,13 +52,13 @@ The player wins once all the cells which do not contain bombs are revealed.
 * Google Fonts
 * Local Storage
 
-###Zombie Theme
+### Zombie Theme
 
 I wanted to create a unique design which still made sense within the minesweeper game rules. Using Zombies was an easy way to have something to avoid (mines) and something to defend a cell (flags).
 
 For ease of understanding, I will refer to zombies as mines and axes as flags throughout this ReadMe, so as to stick to understanding of the original game. 
 
-##Creating the Game
+## Creating the Game
 
 I initially planned my code into individual steps, in short, they could be summed up as:
 
@@ -102,7 +102,7 @@ I created a drop down menu of difficulties and created an event listener which r
 
 This would reset the old grid and replace it with the correct size of grid, 10x10 for easy, 18x14 for medium and 24x20 for hard. The overall size of the grid was also changed to appropriately fill the screen.
 
-###Bomb Assignment
+### Bomb Assignment
 
 The bomb assignment was complicated by the fact that it was only triggered by the player's first click, and this cell had to be empty in order for the game not to be over from the first click. 
 
@@ -126,7 +126,7 @@ function assignBombs(firstClickNumber) {
   }
 }
 ```
-###Checking cells and assigning numbers
+### Checking cells and assigning numbers
 
 Knowing which cells to check was fairly straight forward: a conditional statement checked where the cell was in relation to the boundary conditions (the four edges of the grid) and created an array of all its neighbouring cells. 
 
@@ -157,7 +157,7 @@ function cellsToCheck(cellClicked) {
 To then assign the correct numbers this function was run on every cell and a counter kept track of how many neighbouring cells contained bombs and assigned this counter as the number. If the cell had no neighbouring bombs, it was assigned empty. 
 
 
-###Event Listeners
+### Event Listeners
 
 Event listeners were added to left and right click. The left click ran a 'dig' function, which would check what the class of the cell underneath was. 
 
@@ -168,7 +168,7 @@ The right click added the class of 'flag' to a cell. This showed up as an axe on
 ![](ReadMeImages/GameMidPlay.png)
 
 
-###Revealing Empty Cells
+### Revealing Empty Cells
 
 This was a recursive function which, when fed a cell with the class 'empty', checked all neighbouring cells. 
 
@@ -198,7 +198,7 @@ function revealEmpty(cell) {
 }
 ```
 
-###Game Over and Winner Functions
+### Game Over and Winner Functions
 
 When a player has cleared an entire board without pressing on any mines, a modal popped up to say "Well done" and record the time it took the player to complete the board. 
 
@@ -216,7 +216,7 @@ A button at the top of the page labelled 'The Rules' had an event listener on, s
 
 ![](ReadMeImages/TheRules.png)
 
-###Zombie Themed CSS
+### Zombie Themed CSS
 
 Using google fonts, the header was set with a blood red color, and all the remaining text on the page was set as white with a 'spooky' cartoon feel. 
 
@@ -228,7 +228,7 @@ The flag was a cartoon axe, this was to depict a defense against zombies. And wh
 
 Various other bits of CSS were added to make the page more user friendly, such as hover pointers for any buttons and responsive header sizes for different size screens. 
 
-###High Scores using Local Storage
+### High Scores using Local Storage
 
 Whilst high scores are not integral to a game of minesweeper, I wanted to have each player save their fastest time for each difficulty. As such, variables were created as items within local storage to hold easy highscores, medium highscores and hard high scores. 
 
@@ -248,7 +248,7 @@ difficultyDropDown.addEventListener('change', (event) => {
 })
 ```
 
-###Mobile Game Play 
+### Mobile Game Play 
 
 The immediate difficulty presented with playing minesweeper on mobile is the lack of a right click function on touch screen. 
 
@@ -260,7 +260,7 @@ Furthermore, for mobile friendly viewing, the dropdown for difficulty change was
 
 
 
-##LESSONS LEARNT
+## Lessons Learnt
 
 I thoroughly enjoyed this project and it was a great chance to improve my logical writing skills. 
 
